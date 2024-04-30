@@ -7,13 +7,36 @@
 
 import SwiftUI
 
+
 struct ContentView: View {
+    @State private var jester: Jester = Jester()
+    @State private var jokeID: String = ""
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+            Spacer()
+            Text(jester.currentJoke?.type.uppercased() ?? "")
+                .font(.title)
+                .fontWeight(.black)
+            Spacer()
+            Text(jester.currentJoke?.setup ?? "")
+                .font(.largeTitle)
+            Spacer()
+            Text(jester.currentJoke?.punchline ?? "")
+                .font(.largeTitle)
+            Spacer()
+            TextField("get Joke by ID?", text: $jokeID)
+            HStack {
+                Button {
+                    jester.getJoke()
+                } label: {
+                    Text("Get Joke")
+                }
+                Button {
+                    jester.getJokeByID(id: jokeID)
+                } label: {
+                    Text("Search for Joke")
+                }
+            }
         }
         .padding()
     }
